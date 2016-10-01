@@ -26,26 +26,29 @@ $cript->import('assets/php/encrypt/rc4_script.php');
             <b>Criptografia:</b> <?php echo $cript->encryption; ?><br/>
             <b>Key:</b> <?php echo $cript->key; ?>
         </div>
-        <div class="col-md-4">
-            <form method="get" action="assets/py/esteganografia_py/trocar_senha_processo.php">
-                <label for="c">Criptografia:</label><br/>
-                <input type="radio" name="c"
-                       value="s_des" <?php echo ($cript->encryption == 's_des') ? 'checked' : ''; ?>/> S-DES<br/>
-                <input type="radio" name="c"
-                       value="rc4" <?php echo ($cript->encryption == 'rc4') ? 'checked' : ''; ?>/> RC4<br/>
-                <input type="submit" value="Trocar Senha"/>
-            </form>
-        </div>
-        <div class="col-md-4">
-            <form method="post" action="assets/py/esteganografia_py/trocar_senha_validar.php"
-                  enctype="multipart/form-data">
-                <label for="image">Imagem para validar nova senha:</label><br/>
-                <input type="file" name="image" required/><br/>
-                <label for="data">Data:</label><br/>
-                <input type="text" name="data" placeholder="07/07/1822" required/><br/>
-                <input type="submit" value="Trocar Senha"/>
-            </form>
-        </div>
+        <fieldset>
+            <legend>Mudança de senha por esteganografia e cifra de data</legend>
+            <div class="col-md-4">
+                <form method="get" action="assets/py/esteganografia_py/trocar_senha_processo.php">
+                    <label for="c">Criptografia:</label><br/>
+                    <input type="radio" name="c"
+                           value="s_des" <?php echo ($cript->encryption == 's_des') ? 'checked' : ''; ?>/> S-DES<br/>
+                    <input type="radio" name="c"
+                           value="rc4" <?php echo ($cript->encryption == 'rc4') ? 'checked' : ''; ?>/> RC4<br/>
+                    <input type="submit" value="Trocar Senha"/>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <form method="post" action="assets/py/esteganografia_py/trocar_senha_validar.php"
+                      enctype="multipart/form-data">
+                    <label for="image">Imagem para validar nova senha:</label><br/>
+                    <input type="file" name="image" required/><br/>
+                    <label for="data">Data:</label><br/>
+                    <input type="text" name="data" placeholder="07/07/1822" required/><br/>
+                    <input type="submit" value="Trocar Senha"/>
+                </form>
+            </div>
+        </fieldset>
     </div>
 </div>
 <div class="container">
@@ -80,7 +83,7 @@ $cript->import('assets/php/encrypt/rc4_script.php');
 
                                 $texto = $cript->action('d', $linha); // Decripta
                                 $chat = explode(";;;", $texto); // Divide o texto decriptado
-                                
+
                                 // Imprime o texto de duas formas, caso seja o usuário proprietário ou não
                                 if ($chat[0] == $_SESSION['username']) {
                                     ?>
@@ -139,6 +142,51 @@ $cript->import('assets/php/encrypt/rc4_script.php');
         </div>
     </div>
 </div>
+
+
+<div class="container">
+    <div class="row">
+        <fieldset>
+            <legend>Diffie-Hellman</legend>
+            <?php
+            $dh_file = file_get_contents('assets/php/encrypt/dh.json');
+            $dh = json_decode($dh_file, true);
+
+            foreach ($dh as $key => $value) {
+                switch ($key) {
+                    case 'config':
+                        break;
+                    case 'users':
+                        // Se não tiver um número definido para o Diffie-Hellman
+                        if (!isset($dh[$key][$_SESSION['username']])) {
+                            $dh[$key][$_SESSION['username']] = 1;
+                        }
+                        break;
+                }
+            }
+            ?>
+            <div class="col-md-4">
+                <form method="get" action="assets/php/encrypt/dh_change_num.php">
+                    <label for="num">Número:</label><br/>
+                    <input type="input" name="num" value="<?php echo $dh['users']['alvarofpp']; ?>" required/><br/>
+                    <input type="submit" value="Trocar número"/>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <form method="post" action="assets/php/encrypt/dh_init.php"
+                      enctype="multipart/form-data">
+                    <label for="image">Número escolhido 1:</label><br/>
+                    <input type="input" name="num1" required/><br/>
+                    <label for="image">Número escolhido 2:</label><br/>
+                    <input type="input" name="num2" required/><br/>
+                    <input type="submit" value="Realizar algoritmo Diffie-Hellman"/>
+                </form>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+
 <script>
     var contador = <?php echo $contador; ?>;
     var json = <?php echo json_encode($json); ?>;
