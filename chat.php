@@ -175,10 +175,10 @@ $cript->import('assets/php/encrypt/rc4_script.php');
             <div class="col-md-4">
                 <form method="post" action="assets/php/encrypt/dh_init.php"
                       enctype="multipart/form-data">
-                    <label for="image">Número escolhido 1:</label><br/>
-                    <input type="input" name="num1" required/><br/>
-                    <label for="image">Número escolhido 2:</label><br/>
-                    <input type="input" name="num2" required/><br/>
+                    <label for="image">q:</label><br/>
+                    <input type="input" name="q" value="<?php echo $dh['config']['q']; ?>" required/><br/>
+                    <label for="image">a:</label><br/>
+                    <input type="input" name="a" value="<?php echo $dh['config']['a']; ?>" required/><br/>
                     <input type="submit" value="Realizar algoritmo Diffie-Hellman"/>
                 </form>
             </div>

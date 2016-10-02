@@ -36,7 +36,6 @@ $cript = new chatCriptografia($json['encryption'], $json['key']);
 $cript->import('../../php/encrypt/s_des_script.php');
 $cript->import('../../php/encrypt/rc4_script.php');
 
-
 $texto_final = '';
 // Pega o chat
 $chat = fopen('../../php/database/chat.txt', 'r+');
