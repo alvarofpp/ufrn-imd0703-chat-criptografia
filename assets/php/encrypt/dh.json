@@ -1,1 +1,13 @@
-{"config":{"q":17,"a":3,"Xa":15,"Xb":13,"last_update":"alvarofpp-02\/10\/2016 03:09:49"},"users":{"alvarofpp":15,"Outro eu":13}}
+{
+  "config": {
+    "q": 6,
+    "a": 3,
+    "Xa": 7,
+    "Xb": 11,
+    "last_update": "alvarofpp-05\/10\/2016 19:00:24"
+  },
+  "users": {
+    "alvarofpp": 7,
+    "Outro eu": 11
+  }
+}

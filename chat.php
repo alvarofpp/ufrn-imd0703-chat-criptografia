@@ -71,8 +71,7 @@ $cript->import('assets/php/encrypt/rc4_script.php');
                         // Ler o arquivo até chegar no fim
                         while (!feof($ponteiro)) {
                             $linha = fgets($ponteiro, 4096); // Ler uma linha do arquivo e avanço o ponteiro
-                            // Verifica se é o final do arquivo
-                            $final = (feof($ponteiro)) ? 1 : 0;
+                            $final = (feof($ponteiro)) ? 1 : 0; // Verifica se é o final do arquivo
                             if ($final == 0) {
                                 $linha = substr($linha, 0, strlen($linha) - 1); // Se não, retira o último caractere que é "\n"
                             }
